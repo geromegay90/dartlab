@@ -250,7 +250,7 @@
           <div class="side ${!m.winner && i === info.current ? 'turn' : ''}"><div class="name">${esc(p.name)}${m.winner === p.name ? ' 🏆' : ''}</div>
           <div class="score">${esc(p.score)}</div><div class="sub">${esc(p.sub)}</div></div>`).join('')}</div>`;
       } else if (m.winner) {
-        body += `<p class="empty">${esc(m.winner)} a gagné (détail non enregistré pour ce match).</p>`;
+        body += `<p class="empty">${esc(m.winner)} a gagné${typeof m.detail?.rest === 'number' ? ` (reste du perdant : ${m.detail.rest})` : ''}. Volées non enregistrées : match saisi avec une ancienne version de l'appli.</p>`;
       } else {
         body += '<p class="empty">Match pas encore commencé.</p>';
       }
