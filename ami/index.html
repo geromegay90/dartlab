@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rejoins-moi sur DartLab</title>
+  <meta name="description" content="Ajoute-moi en ami sur DartLab, l'appli de fléchettes entre amis.">
+  <style>
+    :root { --bg: #0E0C0B; --card: #181614; --text: #F2ECE1; --muted: #B8B1A6; --red: #B53A2C; --gold: #FFD940; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+    main { width: 100%; max-width: 380px; text-align: center; }
+    h1 { font-size: 30px; letter-spacing: 3px; margin: 16px 0 4px; }
+    p { color: var(--muted); line-height: 1.5; margin: 8px 0; }
+    .code { display: inline-block; margin: 18px 0; padding: 10px 22px; border: 2px solid var(--red); border-radius: 12px;
+            font-size: 34px; font-weight: 800; letter-spacing: 8px; color: var(--text); background: var(--card); }
+    a.btn { display: block; margin-top: 12px; padding: 15px; border-radius: 12px; font-weight: 700; font-size: 17px; text-decoration: none; }
+    .open { background: var(--red); color: var(--text); }
+    .install { border: 1.5px solid var(--muted); color: var(--text); }
+    small { display: block; margin-top: 22px; color: var(--muted); opacity: .7; }
+  </style>
+</head>
+<body>
+  <main>
+    <svg width="96" height="96" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="46" cy="54" r="34" fill="#B53A2C"/><circle cx="46" cy="54" r="30" fill="#0E0C0B"/>
+      <circle cx="46" cy="54" r="22" fill="none" stroke="#F2ECE1" stroke-width="3"/><circle cx="46" cy="54" r="14" fill="#B53A2C"/>
+      <circle cx="46" cy="54" r="7" fill="#F2ECE1"/><circle cx="46" cy="54" r="3" fill="#B53A2C"/>
+      <path d="M 49 51 L 76 24" stroke="#FFD940" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M 76 24 L 86 22 L 80 30 Z M 76 24 L 78 14 L 70 20 Z" fill="#FFD940"/>
+    </svg>
+    <h1>DARTLAB</h1>
+    <p>Un ami t'invite à jouer aux fléchettes avec lui sur DartLab.</p>
+    <div class="code" id="code">······</div>
+    <a class="btn open" id="open" href="#">Ouvrir dans DartLab</a>
+    <a class="btn install" id="install" href="#">Installer DartLab</a>
+    <p>Déjà installée ? Le bouton du haut ouvre l'appli et propose d'ajouter ton ami.<br>Sinon, installe-la puis entre ce code dans Profil → Amis.</p>
+    <small>DartLab · fléchettes entre amis</small>
+  </main>
+  <script>
+    // Lien d'installation : l'APK de test pour l'instant, la fiche Google Play une fois publiée
+    var INSTALL_URL = 'https://expo.dev/accounts/geromegay90/projects/dartlab';
+    var code = ((new URLSearchParams(location.search).get('c') || '').toUpperCase().match(/^[A-Z0-9]{6}$/) || [''])[0];
+    document.getElementById('code').textContent = code || '??????';
+    document.getElementById('install').href = INSTALL_URL;
+    var open = document.getElementById('open');
+    if (/android/i.test(navigator.userAgent)) {
+      // Android : ouvre l'appli, ou la page d'installation si elle n'est pas là
+      open.href = 'intent://ami/' + code + '#Intent;scheme=dartlab;package=com.dartlab.app;S.browser_fallback_url=' + encodeURIComponent(INSTALL_URL) + ';end';
+    } else {
+      open.href = 'dartlab://ami/' + code;
+    }
+    if (!code) open.style.display = 'none';
+  </script>
+</body>
+</html>
